@@ -1,9 +1,4 @@
-module.exports = app => {
-    app.get('/api/users', (req, res) => {
-        res.json(users);
-    });
-};
-
+// __TEST__
 const users = [
     { id: 1, name: 'Mostafa Ezz'},
     { id: 2, name: 'Ervin Howell'},
@@ -11,3 +6,15 @@ const users = [
     { id: 4, name: 'Patricia Lebsack' },
     { id: 5, name: 'Chelsey Dietrich' }
 ];
+
+export default (app) => {
+    app.get('/api/users', (req, res) => {
+        res.json(users);
+    });
+
+    app.get('/api/current_user', function getCurrentUser(req, res) {
+        res.json({status: 'Error'})
+    })
+
+};
+

@@ -1,0 +1,14 @@
+{
+    "test": {
+        "PORT": 3001,
+        "MONGODB_URI": "mongodb://localhost:27017/ssr",
+        "JWT_SECRET_KEY": "SOME_SECRET_KEY_ENV_TEST",
+        "JWT_ACCESS_TOKEN": "auth"
+    },
+    "development": {
+        "PORT": 3000,
+        "MONGODB_URI": "mongodb://localhost:27017/TodoApp",
+        "JWT_SECRET_KEY": "SOME_SECRET_KEY_ENV_DEV",
+        "JWT_ACCESS_TOKEN": "auth"
+    }
+}
