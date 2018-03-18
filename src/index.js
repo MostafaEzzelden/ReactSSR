@@ -1,15 +1,18 @@
 import 'babel-polyfill';
 import express from 'express';
 import { matchRoutes } from 'react-router-config';
+import config from './config/config';
 import Routes from './client/Routes';
 import renderer from './helpers/renderer';
 import createStore from './helpers/createStore';
-import config from './config/config';
+import { mongoose } from './db/mongoose';
+import todoRoutes from './routes/todoRoutes';
 import userRoutes from './routes/userRoutes';
 
 const app = express();
 app.use(express.static('public'));
 
+todoRoutes(app);
 userRoutes(app);
 
 app.get('*', (req, res) => {
