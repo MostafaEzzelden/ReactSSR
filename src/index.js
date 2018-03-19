@@ -1,6 +1,8 @@
 import 'babel-polyfill';
 import express from 'express';
 import { matchRoutes } from 'react-router-config';
+import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
 import config from './config/config';
 import Routes from './client/Routes';
 import renderer from './helpers/renderer';
@@ -10,13 +12,20 @@ import todoRoutes from './routes/todoRoutes';
 import userRoutes from './routes/userRoutes';
 
 const app = express();
+
+app.use(bodyParser.json());
+
+app.use(cookieParser());
+
 app.use(express.static('public'));
 
 todoRoutes(app);
+
 userRoutes(app);
 
 app.get('*', (req, res) => {
-    const store = createStore(req);
+
+    const store = createStore(req, res);
     const promises = matchRoutes(Routes, req.path)
         .map(({
             route

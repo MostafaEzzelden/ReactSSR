@@ -10,10 +10,8 @@ const Header = ({ auth }) => {
           SSR
         </Link>
         <ul className="right">
-          <li>
-            <Link to="/todos">Todos</Link>
-            <Link to="/users">Users</Link>
-          </li>
+          <li><Link to="/todos">Todos</Link></li>
+          <li><Link to="/register">Register</Link></li>
         </ul>
       </div>
     </nav>

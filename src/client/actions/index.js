@@ -1,11 +1,22 @@
 export const FETCH_USERS = 'fetch_users';
 export const fetchUsers = () => async(dispatch, getState, api) => {
     const res = await api.get('/users');
+
     dispatch({
         type: FETCH_USERS,
         payload: res
     });
 };
+
+export const CREATE_USER = 'create_user';
+export const createUser = (data) => async(dispatch, getState, api) => {
+    const res = await api.post('/users', data);
+
+    return dispatch({
+        type: CREATE_USER,
+        payload: res,
+    })
+}
 
 export const FETCH_TODOS = 'fetch_todos';
 export const fetchTodos = () => async(dispatch, getState, api) => {
