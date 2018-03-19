@@ -11,6 +11,7 @@ const Header = ({ auth }) => {
         </Link>
         <ul className="right">
           <li>
+            <Link to="/todos">Todos</Link>
             <Link to="/users">Users</Link>
           </li>
         </ul>
