@@ -1,7 +1,9 @@
 import React from 'react';
 
 const NotFoundPage = ({ staticContext = {} }) => {
-  staticContext.notFound = true;
+
+    staticContext.notFound = true;
+
     return (
         <div className="container">
             <div className="row">
