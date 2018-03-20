@@ -24,6 +24,7 @@ class TodosList extends Component {
   }
 
   render() {
+    // console.log(this.props.auth)
     return (
       <div>
         {this.head()}
@@ -34,14 +35,19 @@ class TodosList extends Component {
 }
 
 function mapStateToProps(state) {
-  return { todos: state.todos };
+    return {
+        todos: state.todos,
+        auth: state.auth,
+    };
 }
 
 function loadData(store) {
-  return store.dispatch(fetchTodos());
+    return store.dispatch(fetchTodos());
 }
 
 export default {
-  loadData,
-  component: connect(mapStateToProps, { fetchTodos })(TodosList)
+    loadData,
+    component: connect(mapStateToProps, {
+        fetchTodos
+    })(TodosList)
 };

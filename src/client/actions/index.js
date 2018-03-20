@@ -1,3 +1,4 @@
+
 export const FETCH_USERS = 'fetch_users';
 export const fetchUsers = () => async(dispatch, getState, api) => {
     const res = await api.get('/users');
@@ -8,16 +9,6 @@ export const fetchUsers = () => async(dispatch, getState, api) => {
     });
 };
 
-export const CREATE_USER = 'create_user';
-export const createUser = (data) => async(dispatch, getState, api) => {
-    const res = await api.post('/users', data);
-
-    return dispatch({
-        type: CREATE_USER,
-        payload: res,
-    })
-}
-
 export const FETCH_TODOS = 'fetch_todos';
 export const fetchTodos = () => async(dispatch, getState, api) => {
     const res = await api.get('/todos');
@@ -27,11 +18,9 @@ export const fetchTodos = () => async(dispatch, getState, api) => {
     });
 };
 
-
 export const FETCH_CURRENT_USER = 'fetch_current_user';
 export const fetchCurrentUser = () => async(dispatch, getState, api) => {
-    const res = await api.get('/current_user');
-
+    const res = await api.get('/users/me');
     dispatch({
         type: FETCH_CURRENT_USER,
         payload: res
@@ -47,3 +36,23 @@ export const fetchAdmins = () => async(dispatch, getState, api) => {
         payload: res
     });
 };
+
+
+export const LOGOUT_USER = 'logout_user';
+export const logout = () => async(dispatch, getState, api) => {
+    const res = await api.delete('/users/me/token');
+
+    dispatch({
+        type: LOGOUT_USER,
+        payload: res,
+    })
+}
+
+export const TOGGLE_LOGIN_FORM = 'toggle_login_form';
+
+export const setLoginForm = (status) => {
+    return {
+        type: TOGGLE_LOGIN_FORM,
+        status
+    }
+}

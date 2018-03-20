@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { Helmet } from 'react-helmet';
-import { createUser } from '../actions';
+import axios from 'axios';
 
 class Register extends Component {
 
@@ -15,12 +15,13 @@ class Register extends Component {
     }
 
     onSubmit(data) {
-
         this.setState({resError: null})
-        this.props.createUser(data).then((res) => {
-            if(res.payload.data.hasOwnProperty('errors') || res.payload.data.hasOwnProperty('errmsg')) {
-                this.setState({resError: res.payload.data.hasOwnProperty('errmsg') ? 'This Email already exists' : 'Server Error Please try agin'})
+        axios.post('/api/users', data).then((res) => {
+            if(res.data.hasOwnProperty('errors') || res.data.hasOwnProperty('errmsg')) {
+                this.setState({resError: res.data.hasOwnProperty('errmsg') ? 'This Email already exists' : 'Server Error Please try agin'})
                 // this.props.destroy()
+            } else {
+                window.location.href = "/";
             }
         })
     }
@@ -141,5 +142,5 @@ Register = reduxForm({
 })(Register);
 
 export default {
-    component: connect(mapStateToProps, { createUser })(Register)
+    component: connect(mapStateToProps, {  })(Register)
 };
