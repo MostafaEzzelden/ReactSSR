@@ -540,24 +540,27 @@ exports.User = User;
 /* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
+module.exports = __webpack_require__(14);
+
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
 "use strict";
 
 
-__webpack_require__(14);
+__webpack_require__(15);
 
-var _express = __webpack_require__(15);
+var _express = __webpack_require__(16);
 
 var _express2 = _interopRequireDefault(_express);
 
 var _reactRouterConfig = __webpack_require__(4);
 
-var _bodyParser = __webpack_require__(16);
+var _bodyParser = __webpack_require__(17);
 
 var _bodyParser2 = _interopRequireDefault(_bodyParser);
-
-var _cookieParser = __webpack_require__(17);
-
-var _cookieParser2 = _interopRequireDefault(_cookieParser);
 
 var _cookieSession = __webpack_require__(18);
 
@@ -594,8 +597,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var app = (0, _express2.default)();
 
 app.use(_bodyParser2.default.json());
-
-// app.use(cookieParser());
 
 app.use((0, _cookieSession2.default)({
     maxAge: 24 * 60 * 60 * 1000, // 24 hours
@@ -646,28 +647,22 @@ app.listen(process.env.PORT, function () {
 });
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports) {
 
 module.exports = require("babel-polyfill");
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports) {
 
 module.exports = require("express");
 
 /***/ }),
-/* 16 */
-/***/ (function(module, exports) {
-
-module.exports = require("body-parser");
-
-/***/ }),
 /* 17 */
 /***/ (function(module, exports) {
 
-module.exports = require("cookie-parser");
+module.exports = require("body-parser");
 
 /***/ }),
 /* 18 */
@@ -696,7 +691,7 @@ if (env === 'development' || env === 'test') {
 /* 20 */
 /***/ (function(module, exports) {
 
-module.exports = {"test":{"PORT":3001,"MONGODB_URI":"mongodb://localhost:27017/ReactSSR","APP_KEY":"LZJXhzd3R5Lzssvd/dLm5tYF+PrI3g62yYcFaGKWj+E=","COOKIE_KEY":"LZJXhzd3R5Lzssvd/dLm5tYF+PrI3g62yYcFaGKWj+E=","JWT_ACCESS_TOKEN":"auth"},"development":{"PORT":3001,"MONGODB_URI":"mongodb://localhost:27017/ReactSSR","APP_KEY":"LZJXhzd3R5Lzssvd/dLm5tYF+PrI3g62yYcFaGKWj+E=","COOKIE_KEY":"LZJXhzd3R5Lzssvd/dLm5tYF+PrI3g62yYcFaGKWj+E=","JWT_ACCESS_TOKEN":"auth"}}
+module.exports = {"test":{"PORT":3000,"MONGODB_URI":"mongodb://localhost:27017/ReactSSR","APP_KEY":"LZJXhzd3R5Lzssvd/dLm5tYF+PrI3g62yYcFaGKWj+E=","COOKIE_KEY":"LZJXhzd3R5Lzssvd/dLm5tYF+PrI3g62yYcFaGKWj+E=","JWT_ACCESS_TOKEN":"auth"},"development":{"PORT":3000,"MONGODB_URI":"mongodb://localhost:27017/ReactSSR","APP_KEY":"LZJXhzd3R5Lzssvd/dLm5tYF+PrI3g62yYcFaGKWj+E=","COOKIE_KEY":"LZJXhzd3R5Lzssvd/dLm5tYF+PrI3g62yYcFaGKWj+E=","JWT_ACCESS_TOKEN":"auth"}}
 
 /***/ }),
 /* 21 */
@@ -726,6 +721,8 @@ var _LoginFormModal = __webpack_require__(23);
 var _LoginFormModal2 = _interopRequireDefault(_LoginFormModal);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// import style from './styles/app.css';
 
 var App = function App(_ref) {
     var route = _ref.route;
@@ -912,7 +909,6 @@ var LoginForm = function (_Component) {
     _createClass(LoginForm, [{
         key: 'handleHide',
         value: function handleHide() {
-            console.log(this);
             this.props.setLoginForm(false);
         }
     }, {
@@ -929,8 +925,8 @@ var LoginForm = function (_Component) {
                 {
                     show: this.props.loginFormStatus,
                     onHide: this.handleHide,
-                    'aria-labelledby': 'contained-modal-title',
-                    bsSize: 'small'
+                    bsSize: 'sm',
+                    dialogClassName: 'custom-modal'
                 },
                 _react2.default.createElement(
                     _reactBootstrap.Modal.Header,
@@ -1035,7 +1031,7 @@ exports.default = {
 
 
 Object.defineProperty(exports, "__esModule", {
-				value: true
+	value: true
 });
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -1065,202 +1061,202 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var Register = function (_Component) {
-				_inherits(Register, _Component);
+	_inherits(Register, _Component);
 
-				function Register(props) {
-								_classCallCheck(this, Register);
+	function Register(props) {
+		_classCallCheck(this, Register);
 
-								var _this = _possibleConstructorReturn(this, (Register.__proto__ || Object.getPrototypeOf(Register)).call(this, props));
+		var _this = _possibleConstructorReturn(this, (Register.__proto__ || Object.getPrototypeOf(Register)).call(this, props));
 
-								_this.state = {
-												resError: null
-								};
-								_this.onSubmit = _this.onSubmit.bind(_this);
-								return _this;
+		_this.state = {
+			resError: null
+		};
+		_this.onSubmit = _this.onSubmit.bind(_this);
+		return _this;
+	}
+
+	_createClass(Register, [{
+		key: 'onSubmit',
+		value: function onSubmit(data) {
+			var _this2 = this;
+
+			this.setState({ resError: null });
+			_axios2.default.post('/api/users', data).then(function (res) {
+				if (res.data.hasOwnProperty('errors') || res.data.hasOwnProperty('errmsg')) {
+					_this2.setState({ resError: res.data.hasOwnProperty('errmsg') ? 'This Email already exists' : 'Server Error Please try agin' });
+					// this.props.destroy()
+				} else {
+					window.location.href = "/";
 				}
+			});
+		}
+	}, {
+		key: 'head',
+		value: function head() {
+			return _react2.default.createElement(
+				_reactHelmet.Helmet,
+				null,
+				_react2.default.createElement(
+					'title',
+					null,
+					'Company | Register'
+				),
+				_react2.default.createElement('meta', { property: 'og:title', content: 'Register' })
+			);
+		}
+	}, {
+		key: 'render',
+		value: function render() {
+			var _this3 = this;
 
-				_createClass(Register, [{
-								key: 'onSubmit',
-								value: function onSubmit(data) {
-												var _this2 = this;
+			var _props = this.props,
+			    handleSubmit = _props.handleSubmit,
+			    submitSucceeded = _props.submitSucceeded;
 
-												this.setState({ resError: null });
-												_axios2.default.post('/api/users', data).then(function (res) {
-																if (res.data.hasOwnProperty('errors') || res.data.hasOwnProperty('errmsg')) {
-																				_this2.setState({ resError: res.data.hasOwnProperty('errmsg') ? 'This Email already exists' : 'Server Error Please try agin' });
-																				// this.props.destroy()
-																} else {
-																				window.location.href = "/";
-																}
-												});
-								}
-				}, {
-								key: 'head',
-								value: function head() {
-												return _react2.default.createElement(
-																_reactHelmet.Helmet,
-																null,
-																_react2.default.createElement(
-																				'title',
-																				null,
-																				'Company | Register'
-																),
-																_react2.default.createElement('meta', { property: 'og:title', content: 'Register' })
-												);
-								}
-				}, {
-								key: 'render',
-								value: function render() {
-												var _this3 = this;
+			return _react2.default.createElement(
+				'div',
+				{ className: 'container' },
+				_react2.default.createElement(
+					'div',
+					{ className: 'row' },
+					this.head(),
+					_react2.default.createElement(
+						'form',
+						{ ref: function ref(instance) {
+								return _this3.form = instance;
+							}, onSubmit: handleSubmit(this.onSubmit) },
+						_react2.default.createElement(
+							'h3',
+							null,
+							'Register'
+						),
+						_react2.default.createElement(_reduxForm.Field, {
+							name: 'username',
+							type: 'text',
+							component: renderField,
+							label: 'Username'
+						}),
+						_react2.default.createElement(_reduxForm.Field, {
+							name: 'email',
+							type: 'email',
+							component: renderField,
+							label: 'Email'
+						}),
+						this.state.resError && _react2.default.createElement(
+							'span',
+							{ className: 'red-text text-darken-4' },
+							this.state.resError
+						),
+						_react2.default.createElement(_reduxForm.Field, {
+							name: 'age',
+							type: 'number',
+							component: renderField,
+							label: 'Age'
+						}),
+						_react2.default.createElement(_reduxForm.Field, {
+							name: 'password',
+							type: 'password',
+							component: renderField,
+							label: 'Password'
+						}),
+						_react2.default.createElement(_reduxForm.Field, {
+							name: 'repassword',
+							type: 'password',
+							component: renderField,
+							label: 'RE-Password'
+						}),
+						_react2.default.createElement(
+							'div',
+							null,
+							_react2.default.createElement(
+								'button',
+								{
+									type: 'submit',
+									disabled: false,
+									className: 'btn waves-effect waves-light' },
+								'Register'
+							)
+						)
+					)
+				)
+			);
+		}
+	}]);
 
-												var _props = this.props,
-												    handleSubmit = _props.handleSubmit,
-												    submitSucceeded = _props.submitSucceeded;
-
-												return _react2.default.createElement(
-																'div',
-																{ className: 'container' },
-																_react2.default.createElement(
-																				'div',
-																				{ className: 'row' },
-																				this.head(),
-																				_react2.default.createElement(
-																								'form',
-																								{ ref: function ref(instance) {
-																																return _this3.form = instance;
-																												}, onSubmit: handleSubmit(this.onSubmit) },
-																								_react2.default.createElement(
-																												'h3',
-																												null,
-																												'Register'
-																								),
-																								_react2.default.createElement(_reduxForm.Field, {
-																												name: 'username',
-																												type: 'text',
-																												component: renderField,
-																												label: 'Username'
-																								}),
-																								_react2.default.createElement(_reduxForm.Field, {
-																												name: 'email',
-																												type: 'email',
-																												component: renderField,
-																												label: 'Email'
-																								}),
-																								this.state.resError && _react2.default.createElement(
-																												'span',
-																												{ className: 'red-text text-darken-4' },
-																												this.state.resError
-																								),
-																								_react2.default.createElement(_reduxForm.Field, {
-																												name: 'age',
-																												type: 'number',
-																												component: renderField,
-																												label: 'Age'
-																								}),
-																								_react2.default.createElement(_reduxForm.Field, {
-																												name: 'password',
-																												type: 'password',
-																												component: renderField,
-																												label: 'Password'
-																								}),
-																								_react2.default.createElement(_reduxForm.Field, {
-																												name: 'repassword',
-																												type: 'password',
-																												component: renderField,
-																												label: 'RE-Password'
-																								}),
-																								_react2.default.createElement(
-																												'div',
-																												null,
-																												_react2.default.createElement(
-																																'button',
-																																{
-																																				type: 'submit',
-																																				disabled: false,
-																																				className: 'btn waves-effect waves-light' },
-																																'Register'
-																												)
-																								)
-																				)
-																)
-												);
-								}
-				}]);
-
-				return Register;
+	return Register;
 }(_react.Component);
 
 function mapStateToProps(state) {
-				return {};
+	return {};
 }
 
 var renderField = function renderField(_ref) {
-				var input = _ref.input,
-				    label = _ref.label,
-				    type = _ref.type,
-				    _ref$meta = _ref.meta,
-				    touched = _ref$meta.touched,
-				    error = _ref$meta.error,
-				    warning = _ref$meta.warning;
-				return _react2.default.createElement(
-								'div',
-								{ className: 'form-group ' + (touched && (error && " red-text text-darken-4" || warning && " has-warning")) },
-								_react2.default.createElement(
-												'label',
-												null,
-												label
-								),
-								_react2.default.createElement(
-												'div',
-												null,
-												_react2.default.createElement('input', _extends({}, input, { placeholder: label, type: type, className: 'form-control' })),
-												_react2.default.createElement(
-																'div',
-																{ className: 'text-help' },
-																touched && (error && _react2.default.createElement(
-																				'span',
-																				{ className: 'red-text text-darken-4' },
-																				error
-																) || warning && _react2.default.createElement(
-																				'span',
-																				{ className: 'orange-text text-darken-4' },
-																				warning
-																))
-												)
-								)
-				);
+	var input = _ref.input,
+	    label = _ref.label,
+	    type = _ref.type,
+	    _ref$meta = _ref.meta,
+	    touched = _ref$meta.touched,
+	    error = _ref$meta.error,
+	    warning = _ref$meta.warning;
+	return _react2.default.createElement(
+		'div',
+		{ className: 'form-group ' + (touched && (error && " red-text text-darken-4" || warning && " has-warning")) },
+		_react2.default.createElement(
+			'label',
+			null,
+			label
+		),
+		_react2.default.createElement(
+			'div',
+			null,
+			_react2.default.createElement('input', _extends({}, input, { placeholder: label, type: type, className: 'form-control' })),
+			_react2.default.createElement(
+				'div',
+				{ className: 'text-help' },
+				touched && (error && _react2.default.createElement(
+					'span',
+					{ className: 'red-text text-darken-4' },
+					error
+				) || warning && _react2.default.createElement(
+					'span',
+					{ className: 'orange-text text-darken-4' },
+					warning
+				))
+			)
+		)
+	);
 };
 
 var validate = function validate(values) {
-				var errors = {};
-				if (!values.username) errors.username = 'Required';else if (values.username.length < 6) errors.username = 'Must be 6 characters or than';
+	var errors = {};
+	if (!values.username) errors.username = 'Required';else if (values.username.length < 6) errors.username = 'Must be 6 characters or than';
 
-				if (!values.email) errors.email = 'Required';else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) errors.email = 'Invalid email address';
+	if (!values.email) errors.email = 'Required';else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) errors.email = 'Invalid email address';
 
-				if (!values.age) errors.age = 'Required';else if (isNaN(Number(values.age))) errors.age = 'Must be a number';else if (Number(values.age) < 18) errors.age = 'Sorry, you must be at least 18 years old';
+	if (!values.age) errors.age = 'Required';else if (isNaN(Number(values.age))) errors.age = 'Must be a number';else if (Number(values.age) < 18) errors.age = 'Sorry, you must be at least 18 years old';
 
-				if (!values.password) errors.password = 'Required';else if (values.password.length < 5) errors.password = 'Must be 6 characters or than';
+	if (!values.password) errors.password = 'Required';else if (values.password.length < 5) errors.password = 'Must be 6 characters or than';
 
-				if (!values.repassword) errors.repassword = 'Required';else if (values.password.length > 0 && values.password !== values.repassword) errors.repassword = 'RE-Password does not match';
+	if (!values.repassword) errors.repassword = 'Required';else if (values.password.length > 0 && values.password !== values.repassword) errors.repassword = 'RE-Password does not match';
 
-				return errors;
+	return errors;
 };
 
 var warn = function warn(values) {
-				var warnings = {};
-				if (values.age < 19) warnings.age = 'Hmm, you seem a bit young...';
-				if (values.password && values.password.length < 7) warnings.password = 'Password is Weak...';
-				return warnings;
+	var warnings = {};
+	if (values.age < 19) warnings.age = 'Hmm, you seem a bit young...';
+	if (values.password && values.password.length < 7) warnings.password = 'Password is Weak...';
+	return warnings;
 };
 
 Register = (0, _reduxForm.reduxForm)({
-				form: 'syncValidationUser',
-				validate: validate,
-				warn: warn
+	form: 'syncValidationUser',
+	validate: validate,
+	warn: warn
 })(Register);
 
 exports.default = {
-				component: (0, _reactRedux.connect)(mapStateToProps, {})(Register)
+	component: (0, _reactRedux.connect)(mapStateToProps, {})(Register)
 };
 
 /***/ }),
@@ -1577,7 +1573,7 @@ exports.default = function (req, store, context) {
 
   var helmet = _reactHelmet.Helmet.renderStatic();
 
-  return '\n    <html>\n      <head>\n        ' + helmet.title.toString() + '\n        ' + helmet.meta.toString() + '\n        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">\n      </head>\n      <body>\n        <div id="root">' + content + '</div>\n        <script>\n          window.INITIAL_STATE = ' + (0, _serializeJavascript2.default)(store.getState()) + '\n        </script>\n        <script src="bundle.js"></script>\n      </body>\n    </html>\n  ';
+  return '\n  \t<!DOCTYPE html>\n    <html>\n      <head>\n        <meta charset="utf-8">\n        ' + helmet.title.toString() + '\n        ' + helmet.meta.toString() + '\n        <link rel="shortcut icon" href="img/favicon.ico">\n      </head>\n      <body>\n        <div id="root">' + content + '</div>\n        <script>\n          window.INITIAL_STATE = ' + (0, _serializeJavascript2.default)(store.getState()) + '\n        </script>\n        <script src="dist/main.js"></script>\n      </body>\n    </html>\n  ';
 };
 
 /***/ }),

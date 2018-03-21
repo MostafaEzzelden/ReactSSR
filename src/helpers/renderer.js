@@ -19,18 +19,20 @@ export default (req, store, context) => {
   const helmet = Helmet.renderStatic();
 
   return `
+  	<!DOCTYPE html>
     <html>
       <head>
+        <meta charset="utf-8">
         ${helmet.title.toString()}
         ${helmet.meta.toString()}
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+        <link rel="shortcut icon" href="img/favicon.ico">
       </head>
       <body>
         <div id="root">${content}</div>
         <script>
           window.INITIAL_STATE = ${serialize(store.getState())}
         </script>
-        <script src="bundle.js"></script>
+        <script src="dist/main.js"></script>
       </body>
     </html>
   `;

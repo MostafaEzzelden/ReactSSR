@@ -4,6 +4,8 @@ import Header from './components/Header';
 import { fetchCurrentUser } from './actions';
 import LoginForm from './components/utilities/modals/LoginFormModal';
 
+// import style from './styles/app.css';
+
 const App = ({ route }) => {
   return (
     <div>

@@ -11,7 +11,6 @@ class LoginForm extends Component {
     }
 
     handleHide() {
-        console.log(this)
         this.props.setLoginForm(false);
     }
 
@@ -22,8 +21,8 @@ class LoginForm extends Component {
             <Modal
                 show={this.props.loginFormStatus}
                 onHide={this.handleHide}
-                aria-labelledby="contained-modal-title"
-                bsSize="small"
+                bsSize="sm"
+                dialogClassName="custom-modal"
             >
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title">
