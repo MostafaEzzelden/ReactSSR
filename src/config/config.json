@@ -2,13 +2,15 @@
     "test": {
         "PORT": 3001,
         "MONGODB_URI": "mongodb://localhost:27017/ReactSSR",
-        "JWT_SECRET_KEY": "SOME_SECRET_KEY_ENV_TEST",
+        "APP_KEY": "LZJXhzd3R5Lzssvd/dLm5tYF+PrI3g62yYcFaGKWj+E=",
+        "COOKIE_KEY": "LZJXhzd3R5Lzssvd/dLm5tYF+PrI3g62yYcFaGKWj+E=",
         "JWT_ACCESS_TOKEN": "auth"
     },
     "development": {
-        "PORT": 3000,
+        "PORT": 3001,
         "MONGODB_URI": "mongodb://localhost:27017/ReactSSR",
-        "JWT_SECRET_KEY": "SOME_SECRET_KEY_ENV_DEV",
+        "APP_KEY": "LZJXhzd3R5Lzssvd/dLm5tYF+PrI3g62yYcFaGKWj+E=",
+        "COOKIE_KEY": "LZJXhzd3R5Lzssvd/dLm5tYF+PrI3g62yYcFaGKWj+E=",
         "JWT_ACCESS_TOKEN": "auth"
     }
 }

@@ -1,10 +1,32 @@
-import { FETCH_CURRENT_USER } from '../actions';
+import {
+    FETCH_CURRENT_USER,
+    LOGOUT_USER,
+    TOGGLE_LOGIN_FORM,
+} from '../actions';
 
-export default function(state = null, action) {
-  switch (action.type) {
-    case FETCH_CURRENT_USER:
-      return action.payload.data || false;
-    default:
-      return state;
-  }
+const INITIAL_STATE = {
+    user: false,
+    loginFormStatus: false,
+}
+
+export default function(state = INITIAL_STATE, action) {
+    switch (action.type) {
+        case FETCH_CURRENT_USER:
+            return {
+                ...state,
+                user: action.payload.data.status === 'success' && action.payload.data.user || false
+            }
+        case LOGOUT_USER:
+            return {
+                ...state,
+                user: false
+            }
+        case TOGGLE_LOGIN_FORM:
+            return {
+                ...state,
+                loginFormStatus: action.status || false
+            }
+        default:
+            return state;
+    }
 }
