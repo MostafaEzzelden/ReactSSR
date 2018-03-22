@@ -36,13 +36,12 @@ class Register extends Component {
 	}
 
 	render() {
-		const { handleSubmit, submitSucceeded } = this.props
+		const { handleSubmit } = this.props
 	    return (
 			<div className="container">
-				<div className="row">
 					{this.head()}
-					<form ref={instance => this.form = instance} onSubmit={handleSubmit(this.onSubmit)}>
-						<h3>Register</h3>
+					<form className="form-horizontal form-box" onSubmit={handleSubmit(this.onSubmit)} style={{overflow: 'hidden'}}>
+						<h4 className="form-box-header">Register</h4>
 						<Field
 							name="username"
 							type="text"
@@ -72,17 +71,16 @@ class Register extends Component {
 							name="repassword"
 							type="password"
 							component={renderField}
-							label="RE-Password"
+							label="Confirm Password"
 						/>
-						<div>
+						<div className="form-actions">
 					        <button
 					        type="submit"
 					        disabled={false}
-					        className="btn waves-effect waves-light">
-					        Register</button>
+					        className="btn btn-success">
+					        Submit</button>
 				      	</div>
 					</form>
-				</div>
 			</div>
 	    );
 	}
@@ -94,14 +92,13 @@ function mapStateToProps(state) {
     };
 }
 
-
 const renderField = ({input, label, type, meta: { touched, error, warning }}) => (
-  	<div className={`form-group ${touched && ( (error && " red-text text-darken-4") || (warning && " has-warning"))}`}>
-    	<label>{label}</label>
-	    <div>
-	      	<input {...input} placeholder={label} type={type} className="form-control" />
-	      	<div className="text-help">
-		      {touched && ((error && <span className="red-text text-darken-4">{error}</span>) ||(warning && <span className="orange-text text-darken-4">{warning}</span>))}
+  	<div className={`control-group ${(touched && ((error && " error") || (warning && " warning")))  || ''}`}>
+    	<label className="control-label" htmlFor={label}>{label}</label>
+	    <div className="controls">
+	      	<input {...input} type={type} />
+	      	<div className="help-inline">
+                {touched && ((error && <span>{error}</span>) || (warning && <span>{warning}</span>))}
 		    </div>
 	    </div>
   	</div>
@@ -123,7 +120,7 @@ const validate = values => {
     else if (values.password.length < 5) errors.password = 'Must be 6 characters or than'
 
     if (!values.repassword) errors.repassword = 'Required'
-    else if(values.password.length > 0 && values.password !== values.repassword) errors.repassword = 'RE-Password does not match'
+    else if(values.password && values.password.length > 0 && values.password !== values.repassword) errors.repassword = 'RE-Password does not match'
 
     return errors
 }

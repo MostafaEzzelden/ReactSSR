@@ -4,13 +4,13 @@ import Header from './components/Header';
 import { fetchCurrentUser } from './actions';
 import LoginForm from './components/utilities/modals/LoginFormModal';
 
-// import style from './styles/app.css';
-
 const App = ({ route }) => {
   return (
-    <div>
+    <div id="page-container">
         <Header />
-            { renderRoutes(route.routes) }
+        <div id="page-content" style={{margin: 0, minHeight: '388px'}}>
+            {renderRoutes(route.routes)}
+        </div>
         <LoginForm />
     </div>
   );

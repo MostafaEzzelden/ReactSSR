@@ -234,12 +234,10 @@ var logout = exports.logout = function logout() {
 
                         case 2:
                             res = _context5.sent;
-
-
-                            dispatch({
+                            return _context5.abrupt('return', dispatch({
                                 type: LOGOUT_USER,
                                 payload: res
-                            });
+                            }));
 
                         case 4:
                         case 'end':
@@ -258,10 +256,29 @@ var logout = exports.logout = function logout() {
 var TOGGLE_LOGIN_FORM = exports.TOGGLE_LOGIN_FORM = 'toggle_login_form';
 
 var setLoginForm = exports.setLoginForm = function setLoginForm(status) {
-    return {
-        type: TOGGLE_LOGIN_FORM,
-        status: status
-    };
+    return function () {
+        var _ref6 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(dispatch) {
+            return regeneratorRuntime.wrap(function _callee6$(_context6) {
+                while (1) {
+                    switch (_context6.prev = _context6.next) {
+                        case 0:
+                            return _context6.abrupt('return', dispatch({
+                                type: TOGGLE_LOGIN_FORM,
+                                status: status
+                            }));
+
+                        case 1:
+                        case 'end':
+                            return _context6.stop();
+                    }
+                }
+            }, _callee6, undefined);
+        }));
+
+        return function (_x16) {
+            return _ref6.apply(this, arguments);
+        };
+    }();
 };
 
 /***/ }),
@@ -286,10 +303,16 @@ module.exports = require("react-router-config");
 /* 5 */
 /***/ (function(module, exports) {
 
-module.exports = require("mongoose");
+module.exports = require("axios");
 
 /***/ }),
 /* 6 */
+/***/ (function(module, exports) {
+
+module.exports = require("mongoose");
+
+/***/ }),
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -345,22 +368,16 @@ exports.default = [_extends({}, _App2.default, {
 })];
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports) {
 
 module.exports = require("react-router-dom");
 
 /***/ }),
-/* 8 */
-/***/ (function(module, exports) {
-
-module.exports = require("redux-form");
-
-/***/ }),
 /* 9 */
 /***/ (function(module, exports) {
 
-module.exports = require("axios");
+module.exports = require("redux-form");
 
 /***/ }),
 /* 10 */
@@ -386,7 +403,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.User = undefined;
 
-var _mongoose = __webpack_require__(5);
+var _mongoose = __webpack_require__(6);
 
 var _mongoose2 = _interopRequireDefault(_mongoose);
 
@@ -570,7 +587,7 @@ var _config = __webpack_require__(19);
 
 var _config2 = _interopRequireDefault(_config);
 
-var _Routes = __webpack_require__(6);
+var _Routes = __webpack_require__(7);
 
 var _Routes2 = _interopRequireDefault(_Routes);
 
@@ -722,16 +739,18 @@ var _LoginFormModal2 = _interopRequireDefault(_LoginFormModal);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// import style from './styles/app.css';
-
 var App = function App(_ref) {
     var route = _ref.route;
 
     return _react2.default.createElement(
         'div',
-        null,
+        { id: 'page-container' },
         _react2.default.createElement(_Header2.default, null),
-        (0, _reactRouterConfig.renderRoutes)(route.routes),
+        _react2.default.createElement(
+            'div',
+            { id: 'page-content', style: { margin: 0, minHeight: '388px' } },
+            (0, _reactRouterConfig.renderRoutes)(route.routes)
+        ),
         _react2.default.createElement(_LoginFormModal2.default, null)
     );
 };
@@ -762,7 +781,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRouterDom = __webpack_require__(7);
+var _reactRouterDom = __webpack_require__(8);
 
 var _reactRedux = __webpack_require__(2);
 
@@ -779,65 +798,140 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Header = function (_Component) {
     _inherits(Header, _Component);
 
-    function Header() {
+    function Header(props) {
         _classCallCheck(this, Header);
 
-        return _possibleConstructorReturn(this, (Header.__proto__ || Object.getPrototypeOf(Header)).apply(this, arguments));
+        var _this = _possibleConstructorReturn(this, (Header.__proto__ || Object.getPrototypeOf(Header)).call(this, props));
+
+        _this.state = {
+            dropdownState: '_'
+        };
+
+        _this.toggleStateDropdownAccount = _this.toggleStateDropdownAccount.bind(_this);
+        return _this;
     }
 
     _createClass(Header, [{
+        key: 'toggleStateDropdownAccount',
+        value: function toggleStateDropdownAccount() {
+            var _this2 = this;
+
+            this.setState(function () {
+                return {
+                    dropdownState: _this2.state.dropdownState === '_' ? 'open' : '_'
+                };
+            });
+        }
+    }, {
+        key: 'logout',
+        value: function logout() {
+            this.props.logout().then(function () {
+                window.location.href = "/";
+            });
+        }
+    }, {
         key: 'render',
         value: function render() {
             return _react2.default.createElement(
-                'nav',
-                null,
+                'header',
+                { className: 'navbar' },
                 _react2.default.createElement(
                     'div',
-                    { className: 'nav-wrapper' },
+                    { className: 'navbar-inner remove-radius remove-box-shadow' },
                     _react2.default.createElement(
-                        _reactRouterDom.Link,
-                        { to: '/', className: 'brand-logo' },
-                        'SSR'
-                    ),
-                    _react2.default.createElement(
-                        'ul',
-                        { className: 'right' },
+                        'div',
+                        { className: 'container' },
                         _react2.default.createElement(
-                            'li',
-                            null,
-                            _react2.default.createElement(
-                                _reactRouterDom.Link,
-                                { to: '/todos' },
-                                'Todos'
-                            )
+                            'a',
+                            { className: 'btn btn-navbar', 'data-toggle': 'collapse', 'data-target': '.navbar-responsive-collapse' },
+                            _react2.default.createElement('span', { className: 'icon-bar' }),
+                            _react2.default.createElement('span', { className: 'icon-bar' }),
+                            _react2.default.createElement('span', { className: 'icon-bar' })
                         ),
-                        this.props.auth.user ? _react2.default.createElement(
-                            'li',
-                            null,
+                        _react2.default.createElement(
+                            _reactRouterDom.Link,
+                            { className: 'brand', to: '/' },
+                            'Logo'
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'nav-collapse collapse navbar-responsive-collapse' },
                             _react2.default.createElement(
-                                'a',
-                                { href: '/', onClick: this.props.logout.bind(this) },
-                                'Logout'
-                            )
-                        ) : _react2.default.createElement(
-                            'span',
-                            null,
-                            _react2.default.createElement(
-                                'li',
-                                null,
+                                'ul',
+                                { className: 'nav' },
                                 _react2.default.createElement(
-                                    'a',
-                                    { href: 'javascript:void(0);', onClick: this.props.setLoginForm.bind(this, true) },
-                                    'Login'
+                                    'li',
+                                    { className: 'active' },
+                                    _react2.default.createElement(
+                                        _reactRouterDom.Link,
+                                        { to: '/' },
+                                        'Home'
+                                    )
+                                ),
+                                _react2.default.createElement(
+                                    'li',
+                                    null,
+                                    _react2.default.createElement(
+                                        _reactRouterDom.Link,
+                                        { to: '/todos' },
+                                        'Todos'
+                                    )
                                 )
                             ),
                             _react2.default.createElement(
-                                'li',
-                                null,
+                                'form',
+                                { className: 'navbar-search pull-left', action: '#' },
+                                _react2.default.createElement('input', { type: 'text', className: 'search-query span2', placeholder: 'Search' })
+                            ),
+                            this.props.auth.user ? _react2.default.createElement(
+                                'ul',
+                                { className: 'nav pull-right' },
                                 _react2.default.createElement(
-                                    _reactRouterDom.Link,
-                                    { to: '/register' },
-                                    'Register'
+                                    'li',
+                                    { className: "dropdown " + (this.state.dropdownState || ''), onClick: this.toggleStateDropdownAccount },
+                                    _react2.default.createElement(
+                                        'a',
+                                        { href: 'javascript:void(0)', className: 'dropdown-toggle', 'data-toggle': 'dropdown' },
+                                        this.props.auth.user.username,
+                                        ' ',
+                                        _react2.default.createElement('b', { className: 'caret' })
+                                    ),
+                                    _react2.default.createElement(
+                                        'ul',
+                                        { className: 'dropdown-menu' },
+                                        _react2.default.createElement('li', { className: 'divider' }),
+                                        _react2.default.createElement(
+                                            'li',
+                                            null,
+                                            _react2.default.createElement(
+                                                'a',
+                                                { href: 'javascript:void(0)', onClick: this.logout.bind(this) },
+                                                'Logout'
+                                            )
+                                        )
+                                    )
+                                )
+                            ) : _react2.default.createElement(
+                                'ul',
+                                { className: 'nav pull-right' },
+                                _react2.default.createElement(
+                                    'li',
+                                    null,
+                                    _react2.default.createElement(
+                                        'a',
+                                        { href: 'javascript:void(0);', onClick: this.props.setLoginForm.bind(this, true) },
+                                        'Login'
+                                    )
+                                ),
+                                _react2.default.createElement('li', { className: 'divider-vertical' }),
+                                _react2.default.createElement(
+                                    'li',
+                                    null,
+                                    _react2.default.createElement(
+                                        _reactRouterDom.Link,
+                                        { to: '/register' },
+                                        'Register'
+                                    )
                                 )
                             )
                         )
@@ -882,7 +976,13 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(2);
 
+var _reactHelmet = __webpack_require__(3);
+
 var _reactBootstrap = __webpack_require__(24);
+
+var _axios = __webpack_require__(5);
+
+var _axios2 = _interopRequireDefault(_axios);
 
 var _actions = __webpack_require__(1);
 
@@ -902,66 +1002,204 @@ var LoginForm = function (_Component) {
 
         var _this = _possibleConstructorReturn(this, (LoginForm.__proto__ || Object.getPrototypeOf(LoginForm)).call(this, props));
 
-        _this.handleHide = _this.handleHide.bind(_this);
+        _this.state = {
+            resError: false,
+            errors: [],
+            values: {}
+        };
         return _this;
     }
 
     _createClass(LoginForm, [{
         key: 'handleHide',
-        value: function handleHide() {
-            this.props.setLoginForm(false);
+        value: function handleHide(cb) {
+            var _this2 = this;
+
+            this.props.setLoginForm(false).then(function () {
+
+                _this2.setState({
+                    values: {},
+                    errors: [],
+                    resError: false
+                });
+
+                _this2.refs.form.querySelectorAll('input').forEach(function (input) {
+                    input.value = "";
+                });
+
+                cb && typeof cb === 'function' && cb();
+            });
+        }
+    }, {
+        key: 'handleSubmit',
+        value: function handleSubmit(e) {
+            var _this3 = this;
+
+            e.preventDefault();
+            var _errors = [];
+            var elements = this.refs.form.querySelectorAll('input');
+            elements.forEach(function (ele) {
+                _this3.handleInputValidation(ele, _errors);
+            });
+            if (_errors.length) return false;
+            _axios2.default.post('/api/users/login', this.state.values).then(function (res) {
+                if (res.data.status === "error") {
+                    return _this3.setState({
+                        resError: true
+                    });
+                }
+                _this3.handleHide(function () {
+                    return setTimeout(function () {
+                        window.location.href = "/";
+                    }, 200);
+                });
+            });
+        }
+    }, {
+        key: 'validate',
+        value: function validate(values) {
+            var errors = {};
+            if (!values.email) errors.email = 'Required';else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) errors.email = 'Invalid email address';
+            if (!values.password) errors.password = 'Required';
+            return errors;
+        }
+    }, {
+        key: 'handleInputValidation',
+        value: function handleInputValidation(e) {
+            var _errors = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+
+            var ele = e.hasOwnProperty('target') ? e.target : e;
+            var errors = this.state.errors;
+            var values = this.state.values;
+            values[ele.name] = ele.value;
+            var hasError = this.validate(values);
+            if (hasError[ele.name]) _errors.push(hasError[ele.name]);
+            errors[ele.name] = hasError[ele.name] || false;
+            this.setState({
+                values: values,
+                errors: errors
+            });
+            return hasError[ele.name] || false;
         }
     }, {
         key: 'render',
         value: function render() {
-            var tooltip = _react2.default.createElement(
-                _reactBootstrap.Tooltip,
-                { id: 'modal-tooltip' },
-                'wow.'
-            );
+            var _this4 = this;
+
+            var errors = this.state.errors;
 
             return _react2.default.createElement(
                 _reactBootstrap.Modal,
-                {
-                    show: this.props.loginFormStatus,
-                    onHide: this.handleHide,
-                    bsSize: 'sm',
-                    dialogClassName: 'custom-modal'
-                },
+                { show: this.props.loginFormStatus, onHide: this.handleHide.bind(this), bsSize: 'small' },
+                this.head(),
                 _react2.default.createElement(
-                    _reactBootstrap.Modal.Header,
-                    { closeButton: true },
+                    'div',
+                    { className: 'modal-header' },
                     _react2.default.createElement(
-                        _reactBootstrap.Modal.Title,
-                        { id: 'contained-modal-title' },
-                        'Contained Modal'
+                        'button',
+                        { type: 'button', className: 'close', onClick: this.handleHide.bind(this) },
+                        '\xD7'
+                    ),
+                    _react2.default.createElement(
+                        'h4',
+                        null,
+                        'Login'
                     )
                 ),
                 _react2.default.createElement(
-                    _reactBootstrap.Modal.Body,
-                    null,
-                    'Elit est explicabo ipsum',
-                    _react2.default.createElement(
-                        _reactBootstrap.OverlayTrigger,
-                        { overlay: tooltip },
+                    'div',
+                    { className: 'modal-body' },
+                    this.state.resError && _react2.default.createElement(
+                        'div',
+                        { className: 'alert alert-error' },
                         _react2.default.createElement(
-                            'a',
-                            { href: '#tooltip' },
-                            'tooltip'
-                        )
+                            'button',
+                            { type: 'button', className: 'close', onClick: function onClick() {
+                                    return _this4.setState({ resError: false });
+                                } },
+                            '\xD7'
+                        ),
+                        _react2.default.createElement(
+                            'strong',
+                            null,
+                            'Error!'
+                        ),
+                        ' Invalid Credentials!'
                     ),
-                    ' ',
-                    'eaque dolorem blanditiis doloribus sed id ipsam, beatae, rem fuga id earum? Inventore et facilis obcaecati.'
+                    _react2.default.createElement(
+                        'form',
+                        { className: 'form-horizontal', id: 'login-form__modal', onSubmit: this.handleSubmit.bind(this), ref: 'form' },
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'control-group ' + (errors && errors.email && " error" || '') },
+                            _react2.default.createElement(
+                                'label',
+                                { className: 'control-label', htmlFor: 'email' },
+                                'Email'
+                            ),
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'controls' },
+                                _react2.default.createElement('input', { name: 'email', type: 'text', onKeyUp: this.handleInputValidation.bind(this), onBlur: this.handleInputValidation.bind(this) }),
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: 'help-block' },
+                                    errors && errors.email && _react2.default.createElement(
+                                        'span',
+                                        null,
+                                        errors && errors.email
+                                    ) || ''
+                                )
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'control-group ' + (errors && errors.password && " error" || '') },
+                            _react2.default.createElement(
+                                'label',
+                                { className: 'control-label', htmlFor: 'password' },
+                                'Password'
+                            ),
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'controls' },
+                                _react2.default.createElement('input', { name: 'password', type: 'password', onKeyUp: this.handleInputValidation.bind(this), onBlur: this.handleInputValidation.bind(this) }),
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: 'help-block' },
+                                    errors && errors.password && _react2.default.createElement(
+                                        'span',
+                                        null,
+                                        errors && errors.password
+                                    ) || ''
+                                )
+                            )
+                        )
+                    )
                 ),
                 _react2.default.createElement(
-                    _reactBootstrap.Modal.Footer,
-                    null,
+                    'div',
+                    { className: 'modal-footer' },
                     _react2.default.createElement(
-                        _reactBootstrap.Button,
-                        { onClick: this.handleHide },
-                        'Close'
+                        'button',
+                        { className: 'btn btn-default', type: 'submit', form: 'login-form__modal' },
+                        'Login'
                     )
                 )
+            );
+        }
+    }, {
+        key: 'head',
+        value: function head() {
+            return this.props.loginFormStatus && _react2.default.createElement(
+                _reactHelmet.Helmet,
+                null,
+                _react2.default.createElement(
+                    'title',
+                    null,
+                    'Company | Login'
+                ),
+                _react2.default.createElement('meta', { property: 'og:title', content: 'Login Page' })
             );
         }
     }]);
@@ -993,34 +1231,80 @@ module.exports = require("react-bootstrap");
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactHelmet = __webpack_require__(3);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var Home = function Home() {
-  return _react2.default.createElement(
-    'div',
-    { className: 'center-align', style: { marginTop: '200px' } },
-    _react2.default.createElement(
-      'h3',
-      null,
-      'Welcome'
-    ),
-    _react2.default.createElement(
-      'p',
-      null,
-      'Check out these awesome features'
-    )
-  );
-};
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Home = function (_Component) {
+    _inherits(Home, _Component);
+
+    function Home() {
+        _classCallCheck(this, Home);
+
+        return _possibleConstructorReturn(this, (Home.__proto__ || Object.getPrototypeOf(Home)).apply(this, arguments));
+    }
+
+    _createClass(Home, [{
+        key: 'head',
+        value: function head() {
+            return _react2.default.createElement(
+                _reactHelmet.Helmet,
+                null,
+                _react2.default.createElement(
+                    'title',
+                    null,
+                    'Company | Home'
+                ),
+                _react2.default.createElement('meta', { property: 'og:title', content: 'Home Page' })
+            );
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(
+                'div',
+                null,
+                this.head(),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'text-center', style: { marginTop: '200px' } },
+                    _react2.default.createElement(
+                        'h3',
+                        null,
+                        'Welcome'
+                    ),
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        'Check out these awesome features'
+                    )
+                )
+            );
+        }
+    }]);
+
+    return Home;
+}(_react.Component);
+
+;
 
 exports.default = {
-  component: Home
+    component: Home
 };
 
 /***/ }),
@@ -1031,7 +1315,7 @@ exports.default = {
 
 
 Object.defineProperty(exports, "__esModule", {
-	value: true
+				value: true
 });
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -1044,11 +1328,11 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(2);
 
-var _reduxForm = __webpack_require__(8);
+var _reduxForm = __webpack_require__(9);
 
 var _reactHelmet = __webpack_require__(3);
 
-var _axios = __webpack_require__(9);
+var _axios = __webpack_require__(5);
 
 var _axios2 = _interopRequireDefault(_axios);
 
@@ -1061,202 +1345,192 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var Register = function (_Component) {
-	_inherits(Register, _Component);
+				_inherits(Register, _Component);
 
-	function Register(props) {
-		_classCallCheck(this, Register);
+				function Register(props) {
+								_classCallCheck(this, Register);
 
-		var _this = _possibleConstructorReturn(this, (Register.__proto__ || Object.getPrototypeOf(Register)).call(this, props));
+								var _this = _possibleConstructorReturn(this, (Register.__proto__ || Object.getPrototypeOf(Register)).call(this, props));
 
-		_this.state = {
-			resError: null
-		};
-		_this.onSubmit = _this.onSubmit.bind(_this);
-		return _this;
-	}
-
-	_createClass(Register, [{
-		key: 'onSubmit',
-		value: function onSubmit(data) {
-			var _this2 = this;
-
-			this.setState({ resError: null });
-			_axios2.default.post('/api/users', data).then(function (res) {
-				if (res.data.hasOwnProperty('errors') || res.data.hasOwnProperty('errmsg')) {
-					_this2.setState({ resError: res.data.hasOwnProperty('errmsg') ? 'This Email already exists' : 'Server Error Please try agin' });
-					// this.props.destroy()
-				} else {
-					window.location.href = "/";
+								_this.state = {
+												resError: null
+								};
+								_this.onSubmit = _this.onSubmit.bind(_this);
+								return _this;
 				}
-			});
-		}
-	}, {
-		key: 'head',
-		value: function head() {
-			return _react2.default.createElement(
-				_reactHelmet.Helmet,
-				null,
-				_react2.default.createElement(
-					'title',
-					null,
-					'Company | Register'
-				),
-				_react2.default.createElement('meta', { property: 'og:title', content: 'Register' })
-			);
-		}
-	}, {
-		key: 'render',
-		value: function render() {
-			var _this3 = this;
 
-			var _props = this.props,
-			    handleSubmit = _props.handleSubmit,
-			    submitSucceeded = _props.submitSucceeded;
+				_createClass(Register, [{
+								key: 'onSubmit',
+								value: function onSubmit(data) {
+												var _this2 = this;
 
-			return _react2.default.createElement(
-				'div',
-				{ className: 'container' },
-				_react2.default.createElement(
-					'div',
-					{ className: 'row' },
-					this.head(),
-					_react2.default.createElement(
-						'form',
-						{ ref: function ref(instance) {
-								return _this3.form = instance;
-							}, onSubmit: handleSubmit(this.onSubmit) },
-						_react2.default.createElement(
-							'h3',
-							null,
-							'Register'
-						),
-						_react2.default.createElement(_reduxForm.Field, {
-							name: 'username',
-							type: 'text',
-							component: renderField,
-							label: 'Username'
-						}),
-						_react2.default.createElement(_reduxForm.Field, {
-							name: 'email',
-							type: 'email',
-							component: renderField,
-							label: 'Email'
-						}),
-						this.state.resError && _react2.default.createElement(
-							'span',
-							{ className: 'red-text text-darken-4' },
-							this.state.resError
-						),
-						_react2.default.createElement(_reduxForm.Field, {
-							name: 'age',
-							type: 'number',
-							component: renderField,
-							label: 'Age'
-						}),
-						_react2.default.createElement(_reduxForm.Field, {
-							name: 'password',
-							type: 'password',
-							component: renderField,
-							label: 'Password'
-						}),
-						_react2.default.createElement(_reduxForm.Field, {
-							name: 'repassword',
-							type: 'password',
-							component: renderField,
-							label: 'RE-Password'
-						}),
-						_react2.default.createElement(
-							'div',
-							null,
-							_react2.default.createElement(
-								'button',
-								{
-									type: 'submit',
-									disabled: false,
-									className: 'btn waves-effect waves-light' },
-								'Register'
-							)
-						)
-					)
-				)
-			);
-		}
-	}]);
+												this.setState({ resError: null });
+												_axios2.default.post('/api/users', data).then(function (res) {
+																if (res.data.hasOwnProperty('errors') || res.data.hasOwnProperty('errmsg')) {
+																				_this2.setState({ resError: res.data.hasOwnProperty('errmsg') ? 'This Email already exists' : 'Server Error Please try agin' });
+																				// this.props.destroy()
+																} else {
+																				window.location.href = "/";
+																}
+												});
+								}
+				}, {
+								key: 'head',
+								value: function head() {
+												return _react2.default.createElement(
+																_reactHelmet.Helmet,
+																null,
+																_react2.default.createElement(
+																				'title',
+																				null,
+																				'Company | Register'
+																),
+																_react2.default.createElement('meta', { property: 'og:title', content: 'Register' })
+												);
+								}
+				}, {
+								key: 'render',
+								value: function render() {
+												var handleSubmit = this.props.handleSubmit;
 
-	return Register;
+												return _react2.default.createElement(
+																'div',
+																{ className: 'container' },
+																this.head(),
+																_react2.default.createElement(
+																				'form',
+																				{ className: 'form-horizontal form-box', onSubmit: handleSubmit(this.onSubmit), style: { overflow: 'hidden' } },
+																				_react2.default.createElement(
+																								'h4',
+																								{ className: 'form-box-header' },
+																								'Register'
+																				),
+																				_react2.default.createElement(_reduxForm.Field, {
+																								name: 'username',
+																								type: 'text',
+																								component: renderField,
+																								label: 'Username'
+																				}),
+																				_react2.default.createElement(_reduxForm.Field, {
+																								name: 'email',
+																								type: 'email',
+																								component: renderField,
+																								label: 'Email'
+																				}),
+																				this.state.resError && _react2.default.createElement(
+																								'span',
+																								{ className: 'red-text text-darken-4' },
+																								this.state.resError
+																				),
+																				_react2.default.createElement(_reduxForm.Field, {
+																								name: 'age',
+																								type: 'number',
+																								component: renderField,
+																								label: 'Age'
+																				}),
+																				_react2.default.createElement(_reduxForm.Field, {
+																								name: 'password',
+																								type: 'password',
+																								component: renderField,
+																								label: 'Password'
+																				}),
+																				_react2.default.createElement(_reduxForm.Field, {
+																								name: 'repassword',
+																								type: 'password',
+																								component: renderField,
+																								label: 'Confirm Password'
+																				}),
+																				_react2.default.createElement(
+																								'div',
+																								{ className: 'form-actions' },
+																								_react2.default.createElement(
+																												'button',
+																												{
+																																type: 'submit',
+																																disabled: false,
+																																className: 'btn btn-success' },
+																												'Submit'
+																								)
+																				)
+																)
+												);
+								}
+				}]);
+
+				return Register;
 }(_react.Component);
 
 function mapStateToProps(state) {
-	return {};
+				return {};
 }
 
 var renderField = function renderField(_ref) {
-	var input = _ref.input,
-	    label = _ref.label,
-	    type = _ref.type,
-	    _ref$meta = _ref.meta,
-	    touched = _ref$meta.touched,
-	    error = _ref$meta.error,
-	    warning = _ref$meta.warning;
-	return _react2.default.createElement(
-		'div',
-		{ className: 'form-group ' + (touched && (error && " red-text text-darken-4" || warning && " has-warning")) },
-		_react2.default.createElement(
-			'label',
-			null,
-			label
-		),
-		_react2.default.createElement(
-			'div',
-			null,
-			_react2.default.createElement('input', _extends({}, input, { placeholder: label, type: type, className: 'form-control' })),
-			_react2.default.createElement(
-				'div',
-				{ className: 'text-help' },
-				touched && (error && _react2.default.createElement(
-					'span',
-					{ className: 'red-text text-darken-4' },
-					error
-				) || warning && _react2.default.createElement(
-					'span',
-					{ className: 'orange-text text-darken-4' },
-					warning
-				))
-			)
-		)
-	);
+				var input = _ref.input,
+				    label = _ref.label,
+				    type = _ref.type,
+				    _ref$meta = _ref.meta,
+				    touched = _ref$meta.touched,
+				    error = _ref$meta.error,
+				    warning = _ref$meta.warning;
+				return _react2.default.createElement(
+								'div',
+								{ className: 'control-group ' + (touched && (error && " error" || warning && " warning") || '') },
+								_react2.default.createElement(
+												'label',
+												{ className: 'control-label', htmlFor: label },
+												label
+								),
+								_react2.default.createElement(
+												'div',
+												{ className: 'controls' },
+												_react2.default.createElement('input', _extends({}, input, { type: type })),
+												_react2.default.createElement(
+																'div',
+																{ className: 'help-inline' },
+																touched && (error && _react2.default.createElement(
+																				'span',
+																				null,
+																				error
+																) || warning && _react2.default.createElement(
+																				'span',
+																				null,
+																				warning
+																))
+												)
+								)
+				);
 };
 
 var validate = function validate(values) {
-	var errors = {};
-	if (!values.username) errors.username = 'Required';else if (values.username.length < 6) errors.username = 'Must be 6 characters or than';
+				var errors = {};
+				if (!values.username) errors.username = 'Required';else if (values.username.length < 6) errors.username = 'Must be 6 characters or than';
 
-	if (!values.email) errors.email = 'Required';else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) errors.email = 'Invalid email address';
+				if (!values.email) errors.email = 'Required';else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) errors.email = 'Invalid email address';
 
-	if (!values.age) errors.age = 'Required';else if (isNaN(Number(values.age))) errors.age = 'Must be a number';else if (Number(values.age) < 18) errors.age = 'Sorry, you must be at least 18 years old';
+				if (!values.age) errors.age = 'Required';else if (isNaN(Number(values.age))) errors.age = 'Must be a number';else if (Number(values.age) < 18) errors.age = 'Sorry, you must be at least 18 years old';
 
-	if (!values.password) errors.password = 'Required';else if (values.password.length < 5) errors.password = 'Must be 6 characters or than';
+				if (!values.password) errors.password = 'Required';else if (values.password.length < 5) errors.password = 'Must be 6 characters or than';
 
-	if (!values.repassword) errors.repassword = 'Required';else if (values.password.length > 0 && values.password !== values.repassword) errors.repassword = 'RE-Password does not match';
+				if (!values.repassword) errors.repassword = 'Required';else if (values.password && values.password.length > 0 && values.password !== values.repassword) errors.repassword = 'RE-Password does not match';
 
-	return errors;
+				return errors;
 };
 
 var warn = function warn(values) {
-	var warnings = {};
-	if (values.age < 19) warnings.age = 'Hmm, you seem a bit young...';
-	if (values.password && values.password.length < 7) warnings.password = 'Password is Weak...';
-	return warnings;
+				var warnings = {};
+				if (values.age < 19) warnings.age = 'Hmm, you seem a bit young...';
+				if (values.password && values.password.length < 7) warnings.password = 'Password is Weak...';
+				return warnings;
 };
 
 Register = (0, _reduxForm.reduxForm)({
-	form: 'syncValidationUser',
-	validate: validate,
-	warn: warn
+				form: 'syncValidationUser',
+				validate: validate,
+				warn: warn
 })(Register);
 
 exports.default = {
-	component: (0, _reactRedux.connect)(mapStateToProps, {})(Register)
+				component: (0, _reactRedux.connect)(mapStateToProps, {})(Register)
 };
 
 /***/ }),
@@ -1538,7 +1812,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _server = __webpack_require__(31);
 
-var _reactRouterDom = __webpack_require__(7);
+var _reactRouterDom = __webpack_require__(8);
 
 var _reactRedux = __webpack_require__(2);
 
@@ -1550,7 +1824,7 @@ var _serializeJavascript2 = _interopRequireDefault(_serializeJavascript);
 
 var _reactHelmet = __webpack_require__(3);
 
-var _Routes = __webpack_require__(6);
+var _Routes = __webpack_require__(7);
 
 var _Routes2 = _interopRequireDefault(_Routes);
 
@@ -1573,7 +1847,7 @@ exports.default = function (req, store, context) {
 
   var helmet = _reactHelmet.Helmet.renderStatic();
 
-  return '\n  \t<!DOCTYPE html>\n    <html>\n      <head>\n        <meta charset="utf-8">\n        ' + helmet.title.toString() + '\n        ' + helmet.meta.toString() + '\n        <link rel="shortcut icon" href="img/favicon.ico">\n      </head>\n      <body>\n        <div id="root">' + content + '</div>\n        <script>\n          window.INITIAL_STATE = ' + (0, _serializeJavascript2.default)(store.getState()) + '\n        </script>\n        <script src="dist/main.js"></script>\n      </body>\n    </html>\n  ';
+  return '\n\n    <!DOCTYPE html>\n    <html class="no-js">\n    <head>\n        <meta charset="utf-8">\n        ' + helmet.title.toString() + '\n        ' + helmet.meta.toString() + '\n        <meta name="viewport" content="width=device-width,initial-scale=1">\n        <link rel="shortcut icon" href="dist/img/favicon.ico">\n        <link rel="apple-touch-icon" href="dist/img/apple-touch-icon.png">\n        <link rel="apple-touch-icon" sizes="57x57" href="dist/img/apple-touch-icon-57x57-precomposed.png">\n        <link rel="apple-touch-icon" sizes="72x72" href="dist/img/apple-touch-icon-72x72-precomposed.png">\n        <link rel="apple-touch-icon" sizes="114x114" href="dist/img/apple-touch-icon-114x114-precomposed.png">\n        <link rel="apple-touch-icon-precomposed" href="dist/img/apple-touch-icon-precomposed.png">\n        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,400italic,700,700italic">\n        <link rel="stylesheet" href="dist/css/bootstrap.css">\n        <link rel="stylesheet" href="dist/css/plugins.css">\n        <link rel="stylesheet" href="dist/css/main.css">\n        <link rel="stylesheet" href="dist/css/themes.css">\n        <link rel="stylesheet" href="dist/css/app.css">\n        <script src="dist/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>\n    </head>\n    <body>\n        <div id="root">' + content + '</div>\n        <script>window.INITIAL_STATE = ' + (0, _serializeJavascript2.default)(store.getState()) + '</script>\n        <script src="dist/js/app.js"></script>\n    </body>\n    </html>\n  ';
 };
 
 /***/ }),
@@ -1605,7 +1879,7 @@ var _reduxThunk = __webpack_require__(34);
 
 var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
-var _axios = __webpack_require__(9);
+var _axios = __webpack_require__(5);
 
 var _axios2 = _interopRequireDefault(_axios);
 
@@ -1647,7 +1921,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _redux = __webpack_require__(10);
 
-var _reduxForm = __webpack_require__(8);
+var _reduxForm = __webpack_require__(9);
 
 var _usersReducer = __webpack_require__(36);
 
@@ -1804,7 +2078,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.mongoose = undefined;
 
-var _mongoose = __webpack_require__(5);
+var _mongoose = __webpack_require__(6);
 
 var _mongoose2 = _interopRequireDefault(_mongoose);
 
@@ -1849,7 +2123,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Todo = undefined;
 
-var _mongoose = __webpack_require__(5);
+var _mongoose = __webpack_require__(6);
 
 var _mongoose2 = _interopRequireDefault(_mongoose);
 
@@ -1922,9 +2196,41 @@ exports.default = function (app) {
         });
     });
 
+    app.post('/api/users/login', function (req, res) {
+        var body = _lodash2.default.pick(req.body, ['email', 'password']);
+        _user.User.findByCredentials(body.email, body.password).then(function (user) {
+            return user.generateAuthToken().then(function (token) {
+                req.session = { _token: token };
+                res.json(user);
+            });
+        }).catch(function (e) {
+            res.json({
+                status: "error",
+                error: "Invalid Credentials!"
+            });
+        });
+    });
+
+    app.get('/api/users/email/:email', function (req, res) {
+        _user.User.findOne({
+            email: req.params.email
+        }).then(function (user) {
+            if (!user) {
+                promise.reject();
+            }
+            res.json({
+                status: "success"
+            });
+        }).catch(function (e) {
+            res.json({
+                status: "error",
+                error: "Invalid Email!"
+            });
+        });
+    });
+
     app.delete('/api/users/me/token', _authenticate.authenticate, function (req, res) {
         req.user.removeToken(req.token).then(function () {
-            req.session = {};
             res.status(200).json({
                 'status': 'success'
             });

@@ -42,7 +42,7 @@ export const LOGOUT_USER = 'logout_user';
 export const logout = () => async(dispatch, getState, api) => {
     const res = await api.delete('/users/me/token');
 
-    dispatch({
+    return dispatch({
         type: LOGOUT_USER,
         payload: res,
     })
@@ -50,9 +50,9 @@ export const logout = () => async(dispatch, getState, api) => {
 
 export const TOGGLE_LOGIN_FORM = 'toggle_login_form';
 
-export const setLoginForm = (status) => {
-    return {
+export const setLoginForm = (status) => async(dispatch) => {
+    return dispatch({
         type: TOGGLE_LOGIN_FORM,
         status
-    }
+    })
 }
