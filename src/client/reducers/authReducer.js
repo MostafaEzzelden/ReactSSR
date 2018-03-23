@@ -5,7 +5,7 @@ import {
 } from '../actions';
 
 const INITIAL_STATE = {
-    user: false,
+    user: null,
     loginFormStatus: false,
 }
 

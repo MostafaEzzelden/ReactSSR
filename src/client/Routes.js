@@ -5,6 +5,7 @@ import RegisterPage from './pages/RegisterPage';
 import UsersListPage from './pages/UsersListPage';
 import NotFoundPage from './pages/NotFoundPage';
 import TodosListPage from './pages/TodosListPage';
+import NewTodoPage from './pages/NewTodoPage';
 
 export default [{
     ...App,
@@ -13,11 +14,14 @@ export default [{
         path: '/',
         exact: true
     }, {
-    	...RegisterPage,
-    	path: '/register'
-    },{
+        ...RegisterPage,
+        path: '/register'
+    }, {
         ...TodosListPage,
-        path: '/todos'
+        path: '/todos',
+    }, {
+        ...NewTodoPage,
+        path: '/new',
     }, {
         ...UsersListPage,
         path: '/users'

@@ -33,7 +33,6 @@ app.get('*', (req, res) => {
     const store = createStore(req, res);
     const promises = matchRoutes(Routes, req.path)
         .map(({ route }) => {
-            // console.log(route.loadData ? route.loadData.toString() : null)
             return route.loadData ? route.loadData(store) : null;
         })
         .map(promise => {

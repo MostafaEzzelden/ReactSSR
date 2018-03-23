@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Helmet } from 'react-helmet';
 
 class Home extends Component {
-
     head() {
         return (
             <Helmet>

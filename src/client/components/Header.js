@@ -7,15 +7,12 @@ import {
 } from '../actions';
 
 class Header extends Component {
-
     constructor(props) {
-
         super(props)
-
         this.state = {
-            dropdownState: '_'
+            dropdownState: '_',
+            showNavMenu: false,
         }
-
         this.toggleStateDropdownAccount = this.toggleStateDropdownAccount.bind(this)
     }
 
@@ -33,21 +30,49 @@ class Header extends Component {
         })
     }
 
+    showNavMenu() {
+        this.setState({
+            showNavMenu: !this.state.showNavMenu
+        })
+    }
+
+    generateStyleNavAtMedia() {
+        if (this.refs.collapse) {
+            if (this.state.showNavMenu) {
+                return {
+                    overflow: 'visible',
+                    height: 'auto'
+                }
+            } else {
+                return {
+                    overflow: 'hidden',
+                    height: '0'
+                }
+            }
+        }
+        return {}
+    }
+
     render() {
         return (
         <header className="navbar">
             <div className="navbar-inner remove-radius remove-box-shadow">
                 <div className="container">
-                    <a className="btn btn-navbar" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+                    <a ref="collapse" className="btn btn-navbar" data-toggle="collapse" data-target=".navbar-responsive-collapse" onClick={this.showNavMenu.bind(this)}>
                         <span className="icon-bar"></span>
                         <span className="icon-bar"></span>
                         <span className="icon-bar"></span>
                     </a>
                     <Link className="brand" to="/">Logo</Link>
-                    <div className="nav-collapse collapse navbar-responsive-collapse">
+                    <div className="nav-collapse collapse navbar-responsive-collapse" style={this.generateStyleNavAtMedia()}>
                         <ul className="nav">
                             <li className="active"><Link to="/">Home</Link></li>
                             <li><Link to="/todos">Todos</Link></li>
+                            {
+                                this.props.auth.user && (
+                                    <li><Link to="/new">New Todo</Link></li>
+                                )
+                            }
                         </ul>
                         <form className="navbar-search pull-left" action="#">
                             <input type="text" className="search-query span2" placeholder="Search" />
