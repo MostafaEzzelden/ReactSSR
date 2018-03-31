@@ -10,6 +10,9 @@ import createStore from './helpers/createStore';
 import { mongoose } from './db/mongoose';
 import todoRoutes from './routes/todoRoutes';
 import userRoutes from './routes/userRoutes';
+import * as Cache from './services/cache';
+
+// require('./services/cache');
 
 const app = express();
 

@@ -1,5 +1,12 @@
+import {
+    FETCH_USERS,
+    FETCH_TODO,
+    FETCH_TODOS,
+    FETCH_CURRENT_USER,
+    LOGOUT_USER,
+    TOGGLE_LOGIN_FORM
+} from './types'
 
-export const FETCH_USERS = 'fetch_users';
 export const fetchUsers = () => async(dispatch, getState, api) => {
     const res = await api.get('/users');
 
@@ -9,7 +16,15 @@ export const fetchUsers = () => async(dispatch, getState, api) => {
     });
 };
 
-export const FETCH_TODOS = 'fetch_todos';
+export const submitTodo = (values, history) => async(dispatch, getState, api) => {
+    const res = await api.post('/todos', values);
+    history.push('/todos');
+    dispatch({
+        type: FETCH_TODO,
+        payload: res.data
+    });
+};
+
 export const fetchTodos = () => async(dispatch, getState, api) => {
     const res = await api.get('/todos');
     dispatch({
@@ -18,7 +33,6 @@ export const fetchTodos = () => async(dispatch, getState, api) => {
     });
 };
 
-export const FETCH_CURRENT_USER = 'fetch_current_user';
 export const fetchCurrentUser = () => async(dispatch, getState, api) => {
     const res = await api.get('/users/me');
     dispatch({
@@ -27,18 +41,6 @@ export const fetchCurrentUser = () => async(dispatch, getState, api) => {
     });
 };
 
-export const FETCH_ADMINS = 'fetch_admins';
-export const fetchAdmins = () => async(dispatch, getState, api) => {
-    const res = await api.get('/admins');
-
-    dispatch({
-        type: FETCH_ADMINS,
-        payload: res
-    });
-};
-
-
-export const LOGOUT_USER = 'logout_user';
 export const logout = () => async(dispatch, getState, api) => {
     const res = await api.delete('/users/me/token');
 
@@ -47,8 +49,6 @@ export const logout = () => async(dispatch, getState, api) => {
         payload: res,
     })
 }
-
-export const TOGGLE_LOGIN_FORM = 'toggle_login_form';
 
 export const setLoginForm = (status) => async(dispatch) => {
     return dispatch({

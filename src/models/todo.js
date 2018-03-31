@@ -7,6 +7,12 @@ const Todo = mongoose.model('Todo', {
         minlength: 1,
         trim: true
     },
+    content: {
+        type: String,
+        required: true,
+        minlength: 1,
+        trim: true
+    },
     completed: {
         type: Boolean,
         default: false
@@ -15,10 +21,11 @@ const Todo = mongoose.model('Todo', {
         type: Number,
         default: null
     },
-    // _creator: {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     required: true
-    // }
+    _creator: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'User'
+    }
 });
 
 export {

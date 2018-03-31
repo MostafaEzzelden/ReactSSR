@@ -1,0 +1,2 @@
+START MONGO DB CONSOLE
+> mongod --dbpath ~/path/to/your/app/data

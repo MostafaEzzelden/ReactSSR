@@ -2,7 +2,7 @@ import {
     FETCH_CURRENT_USER,
     LOGOUT_USER,
     TOGGLE_LOGIN_FORM,
-} from '../actions';
+} from '../actions/types';
 
 const INITIAL_STATE = {
     user: null,

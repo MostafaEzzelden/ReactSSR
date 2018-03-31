@@ -1,37 +1,43 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import requireAuth from '../components/hocs/requireAuth';
 import { fetchTodos } from '../actions';
 import { Helmet } from 'react-helmet';
 
 class TodosList extends Component {
-  componentDidMount() {
-    this.props.fetchTodos();
-  }
 
-  renderTodos() {
-    return this.props.todos.map(todo => {
-      return <li key={todo._id}>{todo.text}</li>;
-    });
-  }
+    componentDidMount() {
+        this.props.fetchTodos();
+    }
 
-  head() {
-    return (
-      <Helmet>
-        <title>{`${this.props.todos.length} Todos Loaded`}</title>
-        <meta property="og:title" content="Todos App" />
-      </Helmet>
-    );
-  }
+    renderTodos() {
+        if(this.props.todos.length) {
+            return this.props.todos.map(todo => {
+                return <li key={todo._id}>{todo.text}</li>;
+            });
+        } else {
+            return <div className="__no-data">There are no todo available yet.</div>
+        }
+    }
 
-  render() {
-    // console.log(this.props.auth)
-    return (
-      <div>
-        {this.head()}
-        <ul>{this.renderTodos()}</ul>
-      </div>
-    );
-  }
+    head() {
+        return (
+            <Helmet>
+                <title>{`${this.props.todos.length} Todos Loaded`}</title>
+                <meta property="og:title" content="Todos App"/>
+            </Helmet>
+        );
+    }
+
+    render() {
+        return (
+            <div>
+                {this.head()}
+                <ul>{this.renderTodos()}</ul>
+            </div>
+        );
+    }
+
 }
 
 function mapStateToProps(state) {
@@ -49,5 +55,5 @@ export default {
     loadData,
     component: connect(mapStateToProps, {
         fetchTodos
-    })(TodosList)
+    })(requireAuth(TodosList))
 };

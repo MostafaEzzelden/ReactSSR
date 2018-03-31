@@ -34,7 +34,5 @@ export default {
     })(
         requireAuth(AdminsListPage)
     ),
-    loadData: ({
-        dispatch
-    }) => dispatch(fetchAdmins())
+    loadData: ({dispatch}) => dispatch(fetchAdmins())
 };

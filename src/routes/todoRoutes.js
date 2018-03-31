@@ -1,13 +1,41 @@
 import {
     Todo
 } from './../models/todo';
+import {
+    authenticate
+} from '../middleware/authenticate';
+
+import {
+    clearCacheByKey
+} from '../services/cache';
 
 export default (app) => {
-    app.get('/api/todos', (req, res) => {
-        Todo.find({}).then((todos) => {
-            res.json(todos);
-        }, (e) => {
-            res.status(400).send(e);
+
+    app.get('/api/todos', authenticate, async(req, res) => {
+        const todos = await Todo.find({
+            _creator: req.user._id
+        }).cache({
+            key: req.user._id
         });
+
+        res.json(todos);
     });
+
+    app.post('/api/todos', authenticate, (req, res) => {
+        var todo = new Todo({
+            text: req.body.text,
+            content: req.body.content,
+            _creator: req.user._id
+        });
+        todo.save()
+            .then((todo) => {
+                res.json(todo);
+            })
+            .catch((e) => {
+                res.json(e);
+            });
+        clearCacheByKey(req.user._id)
+    });
+
+
 };
