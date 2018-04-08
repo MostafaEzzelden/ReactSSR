@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 import _ from 'lodash';
 import bcrypt from 'bcryptjs';
 
-var UserSchema = new mongoose.Schema({
+const UserSchema = new mongoose.Schema({
     username: {
         type: String,
         required: true,
@@ -128,7 +128,7 @@ UserSchema.pre('save', function(next) {
     }
 });
 
-var User = mongoose.model('User', UserSchema);
+const User = mongoose.model('User', UserSchema);
 
 export {
     User

@@ -1,8 +1,13 @@
 import _ from 'lodash';
-import { User } from '../models/user';
-import { authenticate } from '../middleware/authenticate';
+import {
+    User
+} from '../models/user';
+import {
+    authenticate
+} from '../middleware/authenticate';
 
 export default (app) => {
+
     app.post('/api/users', (req, res) => {
         var body = _.pick(req.body, ['username', 'email', 'age', 'password']);
         var user = new User(body);
@@ -32,7 +37,9 @@ export default (app) => {
         var body = _.pick(req.body, ['email', 'password']);
         User.findByCredentials(body.email, body.password).then((user) => {
             return user.generateAuthToken().then((token) => {
-                req.session = {_token: token}
+                req.session = {
+                    _token: token
+                }
                 res.json(user);
             });
         }).catch((e) => {
