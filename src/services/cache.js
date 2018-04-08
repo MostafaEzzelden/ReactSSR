@@ -8,8 +8,9 @@ import mongoose from 'mongoose';
 // to setup Redis for windows.
 const redisURL = 'redis://127.0.0.1:6379';
 const client = redis.createClient(redisURL);
-client.hget = util.promisify(client.hget);
 const originalQueryExec = mongoose.Query.prototype.exec;
+
+client.hget = util.promisify(client.hget);
 
 const makeHash = (query, collection) => {
     const key = JSON.stringify(Object.assign({}, query, {
@@ -24,9 +25,8 @@ mongoose.Query.prototype.cache = function cache(options = {}) {
     return this;
 }
 
-
 mongoose.Query.prototype.exec = async function exec() {
-    if(this.useCache) {
+    if (this.useCache) {
         // if you need delete all cache redis use >>
         // client.flushall()
         const key = makeHash(this.getQuery(), this.mongooseCollection.name);
@@ -41,10 +41,11 @@ mongoose.Query.prototype.exec = async function exec() {
     } else {
         return originalQueryExec.apply(this, arguments);
     }
-
 }
 
-const clearCacheByKey = (hashKey) => client.del(JSON.stringify(hashKey));
+const clearCacheByKey = (hashKey) => {
+    client.del(JSON.stringify(hashKey));
+}
 
 export {
     clearCacheByKey
