@@ -1,10 +1,7 @@
 import _ from 'lodash';
-import {
-    User
-} from '../models/user';
-import {
-    authenticate
-} from '../middleware/authenticate';
+import { User } from '../models/user';
+import authenticate from '../middleware/authenticate';
+
 
 export default (app) => {
 

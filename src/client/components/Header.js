@@ -55,7 +55,7 @@ class Header extends Component {
 
     render() {
         return (
-        <header className="navbar">
+        <header className="navbar navbar-inverse">
             <div className="navbar-inner remove-radius remove-box-shadow">
                 <div className="container">
                     <a ref="collapse" className="btn btn-navbar" data-toggle="collapse" data-target=".navbar-responsive-collapse" onClick={this.showNavMenu.bind(this)}>
@@ -66,7 +66,7 @@ class Header extends Component {
                     <Link className="brand" to="/">Logo</Link>
                     <div className="nav-collapse collapse navbar-responsive-collapse" style={this.generateStyleNavAtMedia()}>
                         <ul className="nav">
-                            <li className="active"><Link to="/">Home</Link></li>
+                            <li className=""><Link to="/">Home</Link></li>
                             {this.props.auth.user && (<li><Link to="/todos">My Todos</Link></li>)}
                             {this.props.auth.user && (<li><Link to="/new">New Todo</Link></li>)}
                         </ul>

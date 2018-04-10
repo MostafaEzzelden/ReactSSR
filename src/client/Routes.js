@@ -5,7 +5,7 @@ import RegisterPage from './pages/RegisterPage';
 import UsersListPage from './pages/UsersListPage';
 import NotFoundPage from './pages/NotFoundPage';
 import TodosListPage from './pages/TodosListPage';
-import NewTodoPage from './pages/NewTodoPage';
+import NewTodoPage from './pages/todos/NewTodoPage';
 
 export default [{
     ...App,

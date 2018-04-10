@@ -5,7 +5,8 @@ const config = {
     entry: {
         app: [
             './src/client/client.js',
-        ]
+        ],
+        // vendor: ['jquery']
     },
     output: {
         path: path.resolve(__dirname, 'public', 'dist', 'js'),

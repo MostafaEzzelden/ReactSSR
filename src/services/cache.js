@@ -12,7 +12,7 @@ const originalQueryExec = mongoose.Query.prototype.exec;
 
 client.hget = util.promisify(client.hget);
 
-const makeHash = (query, collection) => {
+const generateKey = (query, collection) => {
     const key = JSON.stringify(Object.assign({}, query, {
         collection: collection
     }));
@@ -27,11 +27,11 @@ mongoose.Query.prototype.cache = function cache(options = {}) {
 
 mongoose.Query.prototype.exec = async function exec() {
     if (this.useCache) {
-        // if you need delete all cache redis use >>
-        // client.flushall()
-        const key = makeHash(this.getQuery(), this.mongooseCollection.name);
+        // if you need delete all cache redis you can use client.flushall()
+        const key = generateKey(this.getQuery(), this.mongooseCollection.name);
         const redisValue = await client.hget(this.hashKey, key);
         if (redisValue) {
+            console.log('%s is founded from redis', key)
             const doc = JSON.parse(redisValue);
             return Array.isArray(doc) ? doc.map(r => new this.model(r)) : new this.model(doc);
         }

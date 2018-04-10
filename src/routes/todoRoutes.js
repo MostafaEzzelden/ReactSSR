@@ -1,13 +1,7 @@
-import {
-    Todo
-} from './../models/todo';
-import {
-    authenticate
-} from '../middleware/authenticate';
+import { Todo } from './../models/todo';
+import authenticate from '../middleware/authenticate';
+import clearCache from '../middleware/clearCache';
 
-import {
-    clearCacheByKey
-} from '../services/cache';
 
 export default (app) => {
 
@@ -17,16 +11,16 @@ export default (app) => {
         }).cache({
             key: req.user._id
         });
-
         res.json(todos);
     });
 
-    app.post('/api/todos', authenticate, (req, res) => {
-        var todo = new Todo({
+    app.post('/api/todos', authenticate, clearCache, (req, res) => {
+        const todo = new Todo({
             text: req.body.text,
             content: req.body.content,
             _creator: req.user._id
         });
+
         todo.save()
             .then((todo) => {
                 res.json(todo);
@@ -34,7 +28,6 @@ export default (app) => {
             .catch((e) => {
                 res.json(e);
             });
-        clearCacheByKey(req.user._id)
     });
 
 

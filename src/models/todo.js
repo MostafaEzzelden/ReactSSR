@@ -17,9 +17,9 @@ const Todo = mongoose.model('Todo', {
         type: Boolean,
         default: false
     },
-    completedAt: {
+    createdAt: {
         type: Number,
-        default: null
+        default: new Date().getTime()
     },
     _creator: {
         type: mongoose.Schema.Types.ObjectId,
