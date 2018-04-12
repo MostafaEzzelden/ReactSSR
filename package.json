@@ -8,7 +8,8 @@
         "dev:server": "nodemon --watch build --exec \"node\" ./build/bundle.js",
         "dev:build-server": "webpack --config webpack.server.js --watch",
         "dev:build-client": "webpack --config webpack.client.js --watch",
-        "start": "node ./build/bundle.js"
+        "start": "node ./build/bundle.js",
+        "test": "jest"
     },
     "engines": {
         "node": "8.9.4"
@@ -76,6 +77,8 @@
         "expect": "^1.20.2",
         "mocha": "^3.0.2",
         "nodemon": "1.12.0",
-        "supertest": "^2.0.0"
+        "supertest": "^2.0.0",
+        "jest": "^22.1.4",
+        "puppeteer": "1.0.0"
     }
 }
